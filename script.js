@@ -1,5 +1,7 @@
-let color = "black";
+let color;
 let rainbowOn = false;
+let shadowOn = false;
+let backColor;
 
 /* Change variable color value to the value of the color picker
 when color-button is clicked */
@@ -61,7 +63,9 @@ function changeColor() {
 function selectColor() {
     if (rainbowOn) {
         square.style.backgroundColor = color;rainbowMode();
-    } else {
+    } else if (shadowOn) {
+        square.style.backgroundColor = color; shadowMode();
+    }else {
         square.style.backgroundColor = color;
     }
 }
@@ -75,7 +79,7 @@ function clear() {
     squares.forEach(square => {
         square.style.backgroundColor = "white";
     });
-    if (!rainbowOn) {
+    if (!rainbowOn && !shadowOn) {
         color = colorPicker.value;
     }
 }
@@ -92,5 +96,19 @@ function rainbowMode() {
     color = randomColor;
 }
 
+const shadowButton = document.getElementById("shadow-button");
+shadowButton.addEventListener('click', () => {shadowMode()});
+function shadowMode() {
+    shadowOn = true;
+    const r = parseInt(backColor.substr(1, 2), 16)
+    const g = parseInt(backColor.substr(3, 2), 16)
+    const b = parseInt(backColor.substr(5, 2), 16)
+    const a = parseInt(backColor.substr(7, 2), 16)
+    if (a = "") {
+        color = "#" + r + g + b + 0.1;
+    } else {
+        color = "#" + r + g + b + (a+10);
+    }
+} 
 
 

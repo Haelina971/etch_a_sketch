@@ -1,0 +1,42 @@
+.grid-container {
+    max-width: 600px;
+    max-height: 600px;
+    border: 1px solid black;
+    display: grid;
+    margin: 2rem;
+}
+
+.cell {
+    border: 1px solid black;
+    aspect-ratio: 1;
+}
+
+.functions {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.left-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.right-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    max-width: 10rem;
+    margin: 1rem;
+}
+
+input {
+    max-width: 10rem;
+    margin: 1rem;
+}
+
+output {
+    text-align: center;
+}

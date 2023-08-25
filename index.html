@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etch-A-Sketch</title>
+    <link href="styles.css" rel="stylesheet">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <h1>Etch-A-Sketch</h1>
+    <div class="functions">
+        <div class="left-buttons">
+            <output for="num-of-cells" id="range-value" value="16 X 16"></output>
+            <input type="range" value="16" name="num-of-cells" id="num-of-cells" min="1" max="100"/>
+            <button id="eraser-button">Eraser</button>
+            <button id="clear-button">Clear</button>
+        </div>
+        <div class="right-buttons">
+            <input type="color" id="color-picker"/>
+            <button id="color-button">Color Mode</button>
+            <button id="rainbow-button">Rainbow Mode</button>
+            <button id="shadow-button">Shadow Mode</button>
+        </div>
+    </div>
+    <div class="grid-container"></div>
+</body>
+</html>

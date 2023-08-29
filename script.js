@@ -10,6 +10,9 @@ const colorPicker = document.querySelector("#color-picker");
 const modeButtons = document.querySelectorAll(".mode-choice");
 
 //Event Listeners
+/*Listen to change of input from the slider
+Used arrow function to pass inputRange as a parameter*/
+inputRange.addEventListener('input', () => {changeRange(inputRange)});
 /*Each modeButton is listening for click to define the selected mode
 The color picker button is part of the modeButtons and select the color mode*/
 modeButtons.forEach(modeButton => modeButton.addEventListener('click', changeColor))
@@ -39,7 +42,8 @@ function coloringMode() {
     }
 }
 
-/*Change the value of the variable modeSelected depending on which button is clicked*/
+/*Change the value of the variable modeSelected depending on which button is clicked
+using the data attributes from the HTML document*/
 function changeColor(e) {
     switch(e.target.dataset.choice) {
         case 'rainbow':
@@ -70,25 +74,18 @@ function clear() {
     modeSelected = "color";
 }
 
-inputRange.addEventListener('input', () => {displayRange(inputRange)});
-
-/* Function called when the slider moves.
-Displays the value of the slider to indicate number of cells on each side of the grid. */
-function displayRange(rangeSlider) {
-    const sliderVal = rangeSlider.value;
-    const rangeVal = document.getElementById("range-value");
+/*Called when the slider moves and displays the value of the slider 
+to indicate the number of cells on each side of the grid.*/
+function changeRange(rangeSlider) {
+    sliderVal = rangeSlider.value;
+    const rangeVal = document.querySelector("#range-value");
     rangeVal.innerHTML = sliderVal + " X " + sliderVal;
     grid.innerHTML = "";
     drawGrid(sliderVal);
-    return sliderVal;
 }
-
-
-size = displayRange(inputRange);
 
 /*Draw the grid depending on the slider value*/
 function drawGrid(cellsNumber) {
-    const size = grid.offsetWidth / cellsNumber;
     grid.style.gridTemplateColumns = `repeat(${cellsNumber}, 1fr)`;
     grid.style.gridTemplateRows = `repeat(${cellsNumber}, 1fr)`;
     for(let i=0; i < cellsNumber * cellsNumber; i++) {
@@ -100,7 +97,8 @@ function drawGrid(cellsNumber) {
     squares.forEach(square => square.addEventListener('mouseover', coloringMode))
 }
 
-
+//Default grid when page loads
+drawGrid(16);
 
 
 // shadowButton.addEventListener('click', () => {shadowMode()});

@@ -1,5 +1,5 @@
 //Variables
-let colorSelected;
+let colorSelected = 'black';
 let modeSelected;
 
 //JQuery Selectors
@@ -9,35 +9,40 @@ const clearButton = document.querySelector("#clear-button");
 const colorPicker = document.querySelector("#color-picker");
 const modeButtons = document.querySelectorAll(".mode-choice");
 
-//Event Listeners
-/*Listen to change of input from the slider
-Used arrow function to pass inputRange as a parameter*/
-inputRange.addEventListener('input', () => {changeRange(inputRange)});
-/*Each modeButton is listening for click to define the selected mode
-The color picker button is part of the modeButtons and select the color mode*/
-modeButtons.forEach(modeButton => modeButton.addEventListener('click', changeColor))
-/*The colorPicker gives the variable colorSelected its value
-'input' is the appropriate event for color picker*/
-colorPicker.addEventListener('input', (e) => {colorSelected = e.target.value});
-clearButton.addEventListener('click', clear);
+
 
 /*Colors the cells depending on the value of the variable modeSelected*/
 function coloringMode() {
     switch(modeSelected) {
         case 'rainbow' :
-            this.style.backgroundColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+            this.style.backgroundColor = "#" + Math.floor(Math.random() * 16777215).toString(16);  //generate random color
+            this.classList.remove('shadow');
             break;
         case 'shadow':
-
+            let rgba = getComputedStyle(this).getPropertyValue("background-color"); //get rgba value of cell
+            if (rgba.match(/rgba/)) {
+                let opacity = Number(rgba.slice(-3, -1));
+                if (opacity <= 0.9) {
+                    this.style.backgroundColor = `rgba(0, 0, 0, ${opacity + 0.1})`;
+                    this.classList.add('shadow');
+                }
+            } else if (this.classList.contains("shadow") && rgba == "rgb(0, 0, 0)") {  //check if cell is tagged as shadow and black
+                return;
+            } else {
+                this.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';  //if cell not tagged as shadow, color with first step of opacity
+                }
             break;
         case 'eraser':
             this.style.backgroundColor = 'white';
+            this.classList.remove('shadow');
             break;
         case 'color' :
             this.style.backgroundColor = colorSelected;
+            this.classList.remove('shadow');
             break;
         default :
-            this.style.backgroundColor = 'black';
+            this.style.backgroundColor = colorSelected;
+            this.classList.remove('shadow');
             break;
     }
 }
@@ -59,7 +64,7 @@ function changeColor(e) {
             modeSelected = 'color';
             break;
         default:
-            modeSelected = color;
+            modeSelected = 'color';
             break;
     }
 }
@@ -70,8 +75,8 @@ function clear() {
     let squares = document.querySelectorAll(".cell");
     squares.forEach(square => {
         square.style.backgroundColor = "white";
+        square.classList.remove('shadow');
     });
-    modeSelected = "color";
 }
 
 /*Called when the slider moves and displays the value of the slider 
@@ -100,19 +105,14 @@ function drawGrid(cellsNumber) {
 //Default grid when page loads
 drawGrid(16);
 
-
-// shadowButton.addEventListener('click', () => {shadowMode()});
-// function shadowMode() {
-//     shadowOn = true;
-//     const r = parseInt(backColor.substr(1, 2), 16)
-//     const g = parseInt(backColor.substr(3, 2), 16)
-//     const b = parseInt(backColor.substr(5, 2), 16)
-//     const a = parseInt(backColor.substr(7, 2), 16)
-//     if (a = "") {
-//         color = "#" + r + g + b + 0.1;
-//     } else {
-//         color = "#" + r + g + b + (a+10);
-//     }
-// } 
-
-
+//Event Listeners
+/*Listen to change of input from the slider
+Used arrow function to pass inputRange as a parameter*/
+inputRange.addEventListener('input', () => {changeRange(inputRange)});
+/*Each modeButton is listening for click to define the selected mode
+The color picker button is part of the modeButtons and select the color mode*/
+modeButtons.forEach(modeButton => modeButton.addEventListener('click', changeColor))
+/*The colorPicker gives the variable colorSelected its value
+'input' is the appropriate event for color picker*/
+colorPicker.addEventListener('input', (e) => {colorSelected = e.target.value});
+clearButton.addEventListener('click', clear);

@@ -80,7 +80,6 @@ function clear() {
     if(modeSelected == 'eraser') {
         modeSelected = 'color';
     }
-    console.log(modeSelected);
 }
 
 /*Called when the slider moves and displays the value of the slider 

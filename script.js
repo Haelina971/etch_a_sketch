@@ -1,6 +1,7 @@
 //Variables
 let colorSelected = 'black';
 let modeSelected;
+let draw = false;
 
 //JQuery Selectors
 const inputRange = document.querySelector("#num-of-cells");
@@ -8,11 +9,16 @@ const grid = document.querySelector(".grid-container");
 const clearButton = document.querySelector("#clear-button");
 const colorPicker = document.querySelector("#color-picker");
 const modeButtons = document.querySelectorAll(".mode-choice");
+const body = document.querySelector("body");
 
 
 
 /*Colors the cells depending on the value of the variable modeSelected*/
-function coloringMode() {
+function coloringMode(e) {
+    console.log(draw);
+    if(e.type === 'mouseover' && !draw) {
+        return;
+    }
     switch(modeSelected) {
         case 'rainbow' :
             this.style.backgroundColor = "#" + Math.floor(Math.random() * 16777215).toString(16);  //generate random color
@@ -97,12 +103,12 @@ function drawGrid(cellsNumber) {
     grid.style.gridTemplateColumns = `repeat(${cellsNumber}, 1fr)`;
     grid.style.gridTemplateRows = `repeat(${cellsNumber}, 1fr)`;
     for(let i=0; i < cellsNumber * cellsNumber; i++) {
-        cell = document.createElement('div');
+        const cell = document.createElement('div');
         cell.className = "cell";
+        cell.addEventListener('mouseover', coloringMode);
+        cell.addEventListener('mousedown', coloringMode);
         grid.appendChild(cell);
     }
-    let squares = document.querySelectorAll(".cell");
-    squares.forEach(square => square.addEventListener('mouseover', coloringMode))
 }
 
 //Default grid when page loads
@@ -119,3 +125,5 @@ modeButtons.forEach(modeButton => modeButton.addEventListener('click', changeCol
 'input' is the appropriate event for color picker*/
 colorPicker.addEventListener('input', (e) => {colorSelected = e.target.value});
 clearButton.addEventListener('click', clear);
+body.addEventListener('mousedown', () => {draw = true});
+body.addEventListener('mouseup', () => {draw = false});

@@ -1,6 +1,6 @@
 Etch A Sketch Project for the Odin Project.
 
-A grid of squares is created using Javascript. The squares change color when the user passes over them with the mouse.
+A grid of squares is created using Javascript. The squares change color when the user passes over them with the mouse while maintaining the mouse button down.
 
 Functionalities:
 - Possibility to change the number of cells in the grid using a slider.

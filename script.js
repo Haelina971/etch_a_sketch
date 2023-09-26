@@ -9,7 +9,7 @@ const grid = document.querySelector(".grid-container");
 const clearButton = document.querySelector("#clear-button");
 const colorPicker = document.querySelector("#color-picker");
 const modeButtons = document.querySelectorAll(".mode-choice");
-const body = document.querySelector("body");
+const html = document.querySelector("html");
 
 
 
@@ -106,7 +106,6 @@ function drawGrid(cellsNumber) {
         const cell = document.createElement('div');
         cell.className = "cell";
         cell.addEventListener('mouseover', coloringMode);
-        cell.addEventListener('mousedown', coloringMode);
         grid.appendChild(cell);
     }
 }
@@ -125,5 +124,5 @@ modeButtons.forEach(modeButton => modeButton.addEventListener('click', changeCol
 'input' is the appropriate event for color picker*/
 colorPicker.addEventListener('input', (e) => {colorSelected = e.target.value});
 clearButton.addEventListener('click', clear);
-body.addEventListener('mousedown', () => {draw = true});
-body.addEventListener('mouseup', () => {draw = false});
+html.addEventListener('mousedown', (e) => {e.preventDefault(), draw = true});
+html.addEventListener('mouseup', (e) => {e.preventDefault(), draw = false});
